@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>不動産検索サイト</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <style>
+        #result-display {
+            border: none;
+            display: none;  /* 絞り込みボタンを押す前は非表示にする */
+        }
+    </style>
+</head>
+<body>
+    <!-- 絞り込み機能 -->
+    <div id="sort-container" class="float-bottom sort-section">
+        <div id="sort-box">
+    </div>
+    <div class="sort-section">
+        <h3 class="section-title">学校</h3>
+        <input type="checkbox" id="elementary_school" name="school" value="elementary_school">
+        <label for="elementary_school" class="option-label">小学校</label>
+        <input type="checkbox" id="middle_school" name="school" value="middle_school">
+        <label for="middle_school" class="option-label">中学校</label>
+    </div>
+    <div class="sort-section">
+        <h3 class="section-title">国公私立</h3>
+        <input type="radio" id="all_pp" name="public_private" value="all" checked>
+        <label for="all_pp" class="option-label">すべて</label>
+        <input type="radio" id="coed_pp" name="public_private" value="coed">
+        <label for="coed_pp" class="option-label">共学</label>
+        <input type="radio" id="boys_pp" name="public_private" value="boys">
+        <label for="boys_pp" class="option-label">男子校</label>
+        <input type="radio" id="girls_pp" name="public_private" value="girls">
+        <label for="girls_pp" class="option-label">女子校</label>
+    </div>
+    <div class="sort-section">
+        <h3 class="section-title">男女共学</h3>
+        <input type="radio" id="all_bc" name="boys_coed" value="all" checked>
+        <label for="all_bc" class="option-label">すべて</label>
+        <input type="radio" id="coed_bc" name="boys_coed" value="coed">
+        <label for="coed_bc" class="option-label">共学</label>
+        <input type="radio" id="boys_bc" name="boys_coed" value="boys">
+        <label for="boys_bc" class="option-label">男子校</label>
+        <input type="radio" id="girls_bc" name="boys_coed" value="girls">
+        <label for="girls_bc" class="option-label">女子校</label>
+    </div>    
+    <div class="sort-section">
+        <h3 class="section-title">口コミ評価</h3>
+        <!-- Star ratings are represented as radio buttons for simplicity -->
+        <input type="radio" id="rating_3" name="rating" value="3" checked>
+        <label for="rating_3" class="option-label">★★★以上</label>
+        <input type="radio" id="rating_4" name="rating" value="4">
+        <label for="rating_4" class="option-label">★★★★以上</label>
+        <input type="radio" id="rating_5" name="rating" value="5">
+        <label for="rating_5" class="option-label">★★★★★以上</label>
+    </div>
+            <button id="sort-button">絞り込み</button>
+        </div>
+    </div>
+    <div id="mapTop"></div>
+    <!-- 物件情報 -->
+    <div class="left_column list_left_column" id="left_column_union_id">
+        <section id="right_sliderList">
+            <!-- Property 1 -->
+            <article class="list_element">
+                <input type="hidden" id="clipkey" value="67726515_010">
+                <div class="property-card" onclick="linkClick('/jj/bukken/shosai/JJ010FJ100/?ar=030&amp;bs=010&amp;nc=67726515');" onmousemove="iconTenmetu('139.63998959022305','35.58228025401924','010','/jj/jjcommon/img',this);" onmouseout="iconClean(this);">
+                    <h2>
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html" class="property-title">グランドメゾン武蔵小杉の杜</a>
+                    </h2>
+                    <div class="property-img">
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html">
+                            <img src="https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN001000%2Fimg%2F15%2F67726515%2F67726515_000172.jpg&amp;w=90&amp;h=66" alt="グランドメゾン武蔵小杉の杜の画像" width="90" height="66">
+                        </a>
+                    </div>
+                    <div class="property-info">
+                        <p>川崎市中原区今井西町</p>
+                        <p>東急東横線/武蔵小杉 徒歩12分</p>
+                        <p>1,500～2,000万円</p>  
+                        <p>2LDK～4LDK</p>
+                        <p>57.52m<sup>2</sup>～84.87m<sup>2</sup></p>
+                    </div>
+                    <div class="property-actions">
+                        <a href="/jj/bukken/shiryou/JJ010FJ010/?ar=030&amp;bs=010&amp;bsnc=01067726515&amp;senimotokbn=1" id="shiryousekyu_bukken_0">
+                            <img src="https://suumo.jp/jj/jjcommon/img/btn_417.gif" width="123" height="28" alt="資料請求" class="imgover">
+                        </a>
+                        <img src="https://suumo.jp/jj/jjcommon/img/btn_216_attic.gif" alt="お気に入りに追加" class="imgover js-myListBtn216Image" onclick="registClipSingle(this);">
+                    </div>
+                </div>
+            </article>
+            <!-- Property 2 -->
+            <article class="list_element">
+                <input type="hidden" id="clipkey" value="67726515_010">
+                <div class="property-card" onclick="linkClick('/jj/bukken/shosai/JJ010FJ100/?ar=030&amp;bs=010&amp;nc=67726515');" onmousemove="iconTenmetu('139.63998959022305','35.58228025401924','010','/jj/jjcommon/img',this);" onmouseout="iconClean(this);">
+                    <h2>
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html" class="property-title">グランドメゾン武蔵小杉の杜</a>
+                    </h2>
+                    <div class="property-img">
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html">
+                            <img src="https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN001000%2Fimg%2F15%2F67726515%2F67726515_000172.jpg&amp;w=90&amp;h=66" alt="グランドメゾン武蔵小杉の杜の画像" width="90" height="66">
+                        </a>
+                    </div>
+                    <div class="property-info">
+                        <p>川崎市中原区今井西町</p>
+                        <p>東急東横線/武蔵小杉 徒歩12分</p>
+                        <p>1,500～2,000万円</p>  
+                        <p>2LDK～4LDK</p>
+                        <p>57.52m<sup>2</sup>～84.87m<sup>2</sup></p>
+                    </div>
+                    <div class="property-actions">
+                        <a href="/jj/bukken/shiryou/JJ010FJ010/?ar=030&amp;bs=010&amp;bsnc=01067726515&amp;senimotokbn=1" id="shiryousekyu_bukken_0">
+                            <img src="https://suumo.jp/jj/jjcommon/img/btn_417.gif" width="123" height="28" alt="資料請求" class="imgover">
+                        </a>
+                        <img src="https://suumo.jp/jj/jjcommon/img/btn_216_attic.gif" alt="お気に入りに追加" class="imgover js-myListBtn216Image" onclick="registClipSingle(this);">
+                    </div>
+                </div>
+            </article>
+            <!-- Property 3 -->
+            <article class="list_element">
+                <input type="hidden" id="clipkey" value="67726515_010">
+                <div class="property-card" onclick="linkClick('/jj/bukken/shosai/JJ010FJ100/?ar=030&amp;bs=010&amp;nc=67726515');" onmousemove="iconTenmetu('139.63998959022305','35.58228025401924','010','/jj/jjcommon/img',this);" onmouseout="iconClean(this);">
+                    <h2>
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html" class="property-title">グランドメゾン武蔵小杉の杜</a>
+                    </h2>
+                    <div class="property-img">
+                        <a href="/mansion/__JJ_JJ010FJ100_arz1030z2bsz1010z2ncz167726515.html">
+                            <img src="https://img01.suumo.com/jj/resizeImage?src=gazo%2Fbukken%2F030%2FN001000%2Fimg%2F15%2F67726515%2F67726515_000172.jpg&amp;w=90&amp;h=66" alt="グランドメゾン武蔵小杉の杜の画像" width="90" height="66">
+                        </a>
+                    </div>
+                    <div class="property-info">
+                        <p>川崎市中原区今井西町</p>
+                        <p>東急東横線/武蔵小杉 徒歩12分</p>
+                        <p>1,500～2,000万円</p>  
+                        <p>2LDK～4LDK</p>
+                        <p>57.52m<sup>2</sup>～84.87m<sup>2</sup></p>
+                    </div>
+                    <div class="property-actions">
+                        <a href="/jj/bukken/shiryou/JJ010FJ010/?ar=030&amp;bs=010&amp;bsnc=01067726515&amp;senimotokbn=1" id="shiryousekyu_bukken_0">
+                            <img src="https://suumo.jp/jj/jjcommon/img/btn_417.gif" width="123" height="28" alt="資料請求" class="imgover">
+                        </a>
+                        <img src="https://suumo.jp/jj/jjcommon/img/btn_216_attic.gif" alt="お気に入りに追加" class="imgover js-myListBtn216Image" onclick="registClipSingle(this);">
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+    <iframe id="result-display"></iframe>
+    <script>
+    document.getElementById('sort-button').addEventListener('click', function() {
+        var display = document.getElementById('result-display');
+        display.src = 'https://www.minkou.jp/primary/school/31678/';
+        display.style.display = 'block';  /* 絞り込みボタンを押した後に表示する */
+    });
+    </script>
+</body>
+</html>
